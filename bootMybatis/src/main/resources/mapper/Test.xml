@@ -3,5 +3,9 @@
      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
 <mapper namespace="Test">
-
+    <select id="find" parameterType="Test" resultType="Test">
+        SELECT id, value 
+          From test
+         WHERE id = #{id}
+    </select>
 </mapper>

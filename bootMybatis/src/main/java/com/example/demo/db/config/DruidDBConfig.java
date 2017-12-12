@@ -40,6 +40,7 @@ public class DruidDBConfig {
 	
 	//******************** 数据源配置 start  *****************************
 	@Bean(name = "master")
+	@Primary
 	@ConfigurationProperties(prefix = "druid.db.master")
 	public DataSource masterDataSource() {
 		return DataSourceBuilder.create().type(dataSourceType).build();
@@ -78,8 +79,7 @@ public class DruidDBConfig {
 	
 	
 	//**************** 数据源配置
-	@Bean(name="dataSource")
-	@Primary
+	@Bean(name="dataSourceConfig")
 	public AbstractRoutingDataSource druidThreadLocLRountingDataSource() {
 		ThreadLocalRountingDataSource threadDataSource = new ThreadLocalRountingDataSource();
 		 Map<Object, Object> targetDataResources = new HashMap<>();
@@ -96,7 +96,7 @@ public class DruidDBConfig {
 	public SqlSessionFactoryBean sqlSessionFactory() {
 		SqlSessionFactoryBean sqlSession = new SqlSessionFactoryBean();
 		sqlSession.setDataSource(druidThreadLocLRountingDataSource());
-		sqlSession.setTypeAliasesPackage("com.example.demo");
+		sqlSession.setTypeAliasesPackage("com.example.demo.pojo");
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 		try {
 			sqlSession.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
