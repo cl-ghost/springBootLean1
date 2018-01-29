@@ -99,7 +99,6 @@ public class DaoImpl<T> implements Dao<T> {
 	}
 
 	@Override
-	@Slave
 	public T selectOne(Object obj) {
 		return sqlSessionFactory.openSession().selectOne(getOName(obj) + ".find" , obj);
 	}
@@ -111,6 +110,7 @@ public class DaoImpl<T> implements Dao<T> {
 	}
 
 	@Override
+	@Master
 	public T selectOne(Map<String, Object> search) {
 		return sqlSessionFactory.openSession().selectOne(search.get("table") + ".fing" , search);
 	}
@@ -123,5 +123,11 @@ public class DaoImpl<T> implements Dao<T> {
 	private String getOName(Object obj) {
 		String str = obj.getClass().getName();
 		return str.substring(str.lastIndexOf(".") + 1);
+	}
+
+	@Override
+	@Slave
+	public T findOne(Object obj) {
+		return sqlSessionFactory.openSession().selectOne(getOName(obj) + ".find" , obj);
 	}
 }

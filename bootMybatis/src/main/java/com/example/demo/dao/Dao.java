@@ -26,6 +26,7 @@ public interface Dao<T> {
 	public List<T> list(Map<String,Object> search);
 	public List<T> list(Map<String,Object> search ,String table);
 	
+	public T findOne(Object obj);
 	public T selectOne(Object obj);
 	public T selectOne(Object obj,String table);
 	public T selectOne(Map<String,Object> search);
